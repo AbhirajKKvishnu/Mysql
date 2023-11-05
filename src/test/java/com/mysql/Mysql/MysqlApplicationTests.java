@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.mysql.controller.CustomerAPI;
+import com.mysql.dto.APIResponseView;
 import com.mysql.dto.CustomerDTO;
 import com.mysql.entity.Customer;
 import com.mysql.repository.CustomerRepository;
@@ -97,7 +98,7 @@ class MysqlApplicationTests {
 
 		Mockito.when(customerRepository.findById(null)).thenReturn(null);
 
-		ResponseEntity<List<CustomerDTO>> response = customerAPI.addCustomer(customer);
+		ResponseEntity<APIResponseView> response = customerAPI.addCustomer(customer);
 		Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 

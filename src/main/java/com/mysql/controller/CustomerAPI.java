@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.dto.APIResponseView;
 import com.mysql.dto.CustomerDTO;
 import com.mysql.service.CustomerService;
 
@@ -35,12 +36,16 @@ public class CustomerAPI {
 		return new ResponseEntity<>(customer,HttpStatus.OK);
 	}
 	@PostMapping(value="/customers")
-	public ResponseEntity<List<CustomerDTO>> addCustomer(@RequestBody CustomerDTO customerDto) throws Exception{
+	public ResponseEntity<APIResponseView> addCustomer(@RequestBody CustomerDTO customerDto) throws Exception{
 		
 		
 		Integer id=customerservice.addCustomer(customerDto);
 		System.out.println(id +"added succesfully");
-		return new ResponseEntity<>(HttpStatus.OK);
+		APIResponseView responseView =new APIResponseView();
+		responseView.setStatusCode("200");
+		responseView.setStatusDescription("SUCCESS");
+		responseView.setCustomerDTO(customerDto);
+		return new ResponseEntity<>(responseView,HttpStatus.OK);
 	}
 	@PatchMapping(value="/customers")
 	public ResponseEntity<List<CustomerDTO>> updateCustomer(@RequestBody CustomerDTO customerDto) throws Exception{
